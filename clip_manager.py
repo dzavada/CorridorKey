@@ -568,6 +568,7 @@ def run_inference(clips, device=None, backend=None, max_frames=None, img_size=No
 
     # Resolve img_size: use provided value, or default from backend module
     from CorridorKeyModule.backend import DEFAULT_IMG_SIZE
+
     effective_img_size = img_size if img_size is not None else DEFAULT_IMG_SIZE
     engine = create_engine(backend=backend, device=device, img_size=effective_img_size, low_vram=low_vram)
 
@@ -621,6 +622,7 @@ def run_inference(clips, device=None, backend=None, max_frames=None, img_size=No
                 if i > 0:
                     try:
                         from device_utils import clear_device_cache
+
                         clear_device_cache(device)
                     except ImportError:
                         pass
@@ -703,9 +705,7 @@ def run_inference(clips, device=None, backend=None, max_frames=None, img_size=No
                 refiner_scale=refiner_scale,
             )
             if low_vram and hasattr(engine, "process_frame_tiled"):
-                res = engine.process_frame_tiled(
-                    img_srgb, mask_linear, tile_size=1024, overlap=128, **process_kwargs
-                )
+                res = engine.process_frame_tiled(img_srgb, mask_linear, tile_size=1024, overlap=128, **process_kwargs)
             else:
                 res = engine.process_frame(img_srgb, mask_linear, **process_kwargs)
 

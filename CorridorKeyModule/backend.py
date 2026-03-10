@@ -229,7 +229,9 @@ def create_engine(
         ckpt = _discover_checkpoint(TORCH_EXT)
         from CorridorKeyModule.inference_engine import CorridorKeyEngine
 
-        logger.info("Torch engine loaded: %s (device=%s, img_size=%d, low_vram=%s)", ckpt.name, device, img_size, low_vram)
+        logger.info(
+            "Torch engine loaded: %s (device=%s, img_size=%d, low_vram=%s)", ckpt.name, device, img_size, low_vram
+        )
         return CorridorKeyEngine(
             checkpoint_path=str(ckpt),
             device=device or "cpu",
