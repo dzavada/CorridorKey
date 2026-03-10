@@ -564,10 +564,8 @@ def run_inference(clips, device=None, backend=None, max_frames=None, img_size=No
 
     if device is None:
         device = resolve_device()
-    from CorridorKeyModule.backend import create_engine
-
     # Resolve img_size: use provided value, or default from backend module
-    from CorridorKeyModule.backend import DEFAULT_IMG_SIZE
+    from CorridorKeyModule.backend import DEFAULT_IMG_SIZE, create_engine
 
     effective_img_size = img_size if img_size is not None else DEFAULT_IMG_SIZE
     engine = create_engine(backend=backend, device=device, img_size=effective_img_size, low_vram=low_vram)
